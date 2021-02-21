@@ -1,7 +1,7 @@
 ---
 title: "Lab 04 - La Quinta is Spanish for next to Denny's, Pt. 1"
-author: "Insert your name here"
-date: "Insert date here"
+author: "Steph Bossert"
+date: "20 Feb 21"
 output: github_document
 ---
 
@@ -9,36 +9,39 @@ output: github_document
 
 ```{r load-packages, message = FALSE}
 library(tidyverse) 
-library(dsbox) 
 ```
 
 ```{r load-data, message = FALSE}
 states <- read_csv("data/states.csv")
+View(states)
 ```
 
 ### Exercise 1
-
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+nrow(dennys)
+###1643
+ncol(dennys)
+###6
 
 ### Exercise 2
-
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+nrow(laquinta)
+#909
+nrow(laquinta)
+909
+dennys: no
+la quinta: yes: colombia, turkey, new zealand, chile, mexico, canada, honduras 
 
 ### Exercise 3
-
+dennys: no
+la quinta: yes: colombia, turkey, new zealand, chile, mexico, canada, honduras 
 ...
 
 ### Exercise 4
-
-...
-
+The La Quinta doesn't have country listed, so you could view using the table function all of the states, then view the ones that aren't US states. You could also filter this out, but that would take a lot longer, putting in 50 codes.
 ### Exercise 5
+```{r}
+dennys %>%
+  filter(!(state %in% states$abbreviation))
+```
 
 ...
 
