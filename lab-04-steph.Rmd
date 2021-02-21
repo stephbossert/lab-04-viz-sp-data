@@ -1,0 +1,120 @@
+---
+title: "Lab 04 - La Quinta is Spanish for next to Denny's, Pt. 1"
+author: "Steph Bossert"
+date: "20 Feb 21"
+output: github_document
+---
+
+### Load packages and data
+
+```{r load-packages, message = FALSE}
+library(tidyverse) 
+load("/Users/stephaniebossert/Downloads/dennys.rda")
+load("/Users/stephaniebossert/Downloads/laquinta.rda")
+```
+
+```{r load-data, message = FALSE}
+states <- read_csv("data/states.csv")
+```
+
+### Exercise 1
+nrow(dennys)
+###1643
+ncol(dennys)
+###6
+
+### Exercise 2
+nrow(laquinta)
+#909
+nrow(laquinta)
+909
+dennys: no
+la quinta: yes: colombia, turkey, new zealand, chile, mexico, canada, honduras 
+
+### Exercise 3
+dennys: no
+la quinta: yes: colombia, turkey, new zealand, chile, mexico, canada, honduras 
+...
+
+### Exercise 4
+The La Quinta doesn't have country listed, so you could view using the table function all of the states, then view the ones that aren't US states. You could also filter this out, but that would take a lot longer, putting in 50 codes.
+### Exercise 5
+```{r}
+dennys %>% 
+  filter(!(state %in% states$abbreviation))
+```
+### Exercise 6
+```{r}
+dennys %>%
+  mutate(country = "United States")
+```
+### Exercise 7
+Canada Colombia, Hondoras, Mexico
+
+###Exercise 8
+```{r8}
+laquinta %>%
+  mutate(country = case_when(
+    state %in% state.abb     ~ "United States",
+    state %in% c("ON", "BC") ~ "Canada",
+    state == "ANT"           ~ "Colombia",
+    state == "FM"            ~ "Hondoras",
+    state == "AG"           ~  "Mexico"))     
+  
+```
+### Exercise 9 
+```{r}
+table(dennys$state)
+###CA has the most and Deleware has the least
+table(laquinta$state)
+###Texas has the most and Maine and Vermont have the least
+```
+####Exercise 10
+```{r}
+dennys %>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation")) %>%
+  mutate(dennys_per_sqmile = 1000*n/area) %>%
+ arrange(dennys_per_sqmile)
+###least alaska, most-DC
+laquinta%>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation")) %>%
+  mutate(laquinta_per_sqmile = 1000*n/area) %>%
+  arrange(laquinta_per_sqmile)
+```
+###least- Alaska, most- Rhode Island
+
+####Exercise 10
+```{r}
+dennys <- dennys %>%
+  mutate(establishment = "Denny's")
+laquinta <- laquinta %>%
+  mutate(establishment = "La Quinta")
+dennys_laquinta <- bind_rows(dennys, laquinta)
+ggplot(dennys_laquinta, mapping = aes(x = longitude, y = latitude, color = establishment, alpha = .05)) +
+  geom_point()
+view(dennys_laquinta)
+```
+###Exercise 12
+```{r}
+dennys_laquintaTX <- dennys_laquinta %>%
+  filter(state == "TX")
+ggplot(dennys_laquintaTX, mapping = aes(x = longitude, y = latitude, color = establishment)) +
+  geom_point()
+```
+###Exercise 11
+```{r}
+dn_lqNC <- dennys_laquinta %>%
+  filter(state == "NC")
+ggplot(dn_lqNC, mapping = aes(x = longitude, y = latitude, color = establishment, alpha = .08)) +
+  geom_point()
+
+```
+
+
+``` 
+
+
+
+
